@@ -5,4 +5,4 @@
 
 本课程中所使用的代码来源于[Dive into DL PyTorch](https://github.com/ShusenTang/Dive-into-DL-PyTorch)，感谢ShusenTang的贡献！
 
-课程的创意得益于挚友哈尔滨工业大学的**屈教授**，在此一并感谢。
+课程的创意得益于挚友计算机视觉专家、哈尔滨工业大学的**屈教授**，在此一并感谢。
