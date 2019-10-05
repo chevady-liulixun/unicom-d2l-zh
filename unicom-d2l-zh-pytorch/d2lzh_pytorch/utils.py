@@ -210,7 +210,8 @@ def evaluate_accuracy(data_iter, net,
         for X, y in data_iter:
             if isinstance(net, torch.nn.Module):
                 net.eval() # 评估模式, 这会关闭dropout
-                acc_sum += (net(X.to(device)).argmax(dim=1) == y.to(device)).float().sum().cpu().item()
+#                acc_sum += (net(X.to(device)).argmax(dim=1) == y.to(device)).float().sum().cpu().item()
+                acc_sum += (net(X.to(device)).argmax(dim=1) == y.to(device)).float().sum().item()
                 net.train() # 改回训练模式
             else: # 自定义的模型, 3.13节之后不会用到, 不考虑GPU
                 if('is_training' in net.__code__.co_varnames): # 如果有is_training这个参数
