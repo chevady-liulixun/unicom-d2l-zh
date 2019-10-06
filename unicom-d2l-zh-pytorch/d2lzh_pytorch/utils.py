@@ -113,11 +113,48 @@ def show_fashion_mnist(images, labels):
 #     return acc_sum / n
 
 
+#def train_ch3(net, train_iter, test_iter, loss, num_epochs, batch_size,
+#              params=None, lr=None, optimizer=None):
+#    for epoch in range(num_epochs):
+#        train_l_sum, train_acc_sum, n = 0.0, 0.0, 0
+#        for X, y in train_iter:
+#            y_hat = net(X)
+#            l = loss(y_hat, y).sum()
+#            
+#            # 梯度清零
+#            if optimizer is not None:
+#                optimizer.zero_grad()
+#            elif params is not None and params[0].grad is not None:
+#                for param in params:
+#                    param.grad.data.zero_()
+#            
+#            l.backward()
+#            if optimizer is None:
+#                sgd(params, lr, batch_size)
+#            else:
+#                optimizer.step()  # “softmax回归的简洁实现”一节将用到
+#            
+#            
+#            train_l_sum += l.item()
+#            train_acc_sum += (y_hat.argmax(dim=1) == y).sum().item()
+#            n += y.shape[0]
+#        test_acc = evaluate_accuracy(test_iter, net)
+#        print('epoch %d, loss %.4f, train acc %.3f, test acc %.3f'
+#              % (epoch + 1, train_l_sum / n, train_acc_sum / n, test_acc))
+
+# 上面那段在3.7执行有错误，改为下面的代码
 def train_ch3(net, train_iter, test_iter, loss, num_epochs, batch_size,
               params=None, lr=None, optimizer=None):
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    # 这里加入1句,使得net自适应当前的device
+    net = net.to(device)
+    print("training on ", device)
     for epoch in range(num_epochs):
         train_l_sum, train_acc_sum, n = 0.0, 0.0, 0
         for X, y in train_iter:
+            # 这里加入2句,使得X,y自适应当前的device
+            X = X.to(device)
+            y = y.to(device)
             y_hat = net(X)
             l = loss(y_hat, y).sum()
             
@@ -141,8 +178,6 @@ def train_ch3(net, train_iter, test_iter, loss, num_epochs, batch_size,
         test_acc = evaluate_accuracy(test_iter, net)
         print('epoch %d, loss %.4f, train acc %.3f, test acc %.3f'
               % (epoch + 1, train_l_sum / n, train_acc_sum / n, test_acc))
-
-
 
 
 # ########################### 3.7 #####################################3
@@ -206,8 +241,6 @@ def corr2d(X, K):
 def evaluate_accuracy(data_iter, net, 
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')):
     acc_sum, n = 0.0, 0
-    net = net.to(device)
-    print("device is ", device)
     with torch.no_grad():
         for X, y in data_iter:
             if isinstance(net, torch.nn.Module):
