@@ -206,6 +206,7 @@ def corr2d(X, K):
 def evaluate_accuracy(data_iter, net, 
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')):
     acc_sum, n = 0.0, 0
+    net = net.to(device)
     print("device is ", device)
     with torch.no_grad():
         for X, y in data_iter:
