@@ -145,7 +145,7 @@ def show_fashion_mnist(images, labels):
 # 上面那段在3.7执行有错误，改为下面的代码
 def train_ch3(net, train_iter, test_iter, loss, num_epochs, batch_size,
               params=None, lr=None, optimizer=None):
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    device = get_current_device()
     print("training on ", device)
     for epoch in range(num_epochs):
         train_l_sum, train_acc_sum, n = 0.0, 0.0, 0
@@ -184,6 +184,14 @@ class FlattenLayer(torch.nn.Module):
         super(FlattenLayer, self).__init__()
     def forward(self, x): # x shape: (batch, *, *, ...)
         return x.view(x.shape[0], -1)
+
+
+# ########################### 3.9 ######################################
+def get_current_device():
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    index = torch.cuda.current_device()
+    current_device = str(device) + ':' + str(index)
+    return current_device
 
 
 # ########################### 3.11 ###############################
@@ -237,7 +245,7 @@ def corr2d(X, K):
 
 # ############################ 5.5 #########################
 def evaluate_accuracy(data_iter, net, 
-        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')):
+        device = get_current_device()):
     acc_sum, n = 0.0, 0
     with torch.no_grad():
         for X, y in data_iter:
