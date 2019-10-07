@@ -188,9 +188,13 @@ class FlattenLayer(torch.nn.Module):
 
 # ########################### 3.9 ######################################
 def get_current_device():
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    index = torch.cuda.current_device()
-    current_device = str(device) + ':' + str(index)
+    if torch.cuda.is_available() :
+        device = torch.device('cuda')
+        gpu_index = torch.cuda.current_device()
+        current_device = str(device) + ':' + str(gpu_index)
+    else :
+        device = torch.device('cpu')
+        current_device = str(device)
     return current_device
 
 
