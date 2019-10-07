@@ -146,8 +146,13 @@ def show_fashion_mnist(images, labels):
 def train_ch3(net, train_iter, test_iter, loss, num_epochs, batch_size,
               params=None, lr=None, optimizer=None):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    # 这里加入1句,使得net自适应当前的device
-    net = net.to(device)
+    have_to = dir (net)
+    if 'to' in have_to:
+    #do some thing you need
+        # 这里加入1句,使得net自适应当前的device
+        net = net.to(device)
+    else:
+        device = 'cpu' #不知道net里面有哪些属性，干脆就在CPU上运行了
     print("training on ", device)
     for epoch in range(num_epochs):
         train_l_sum, train_acc_sum, n = 0.0, 0.0, 0
