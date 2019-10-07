@@ -146,7 +146,7 @@ def show_fashion_mnist(images, labels):
 def train_ch3(net, train_iter, test_iter, loss, num_epochs, batch_size,
               params=None, lr=None, optimizer=None):
     device = get_current_device()
-    print("training on ", device)
+    print("training on", device)
     for epoch in range(num_epochs):
         train_l_sum, train_acc_sum, n = 0.0, 0.0, 0
         for X, y in train_iter:
