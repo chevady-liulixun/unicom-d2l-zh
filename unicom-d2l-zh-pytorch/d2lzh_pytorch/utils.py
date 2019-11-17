@@ -397,8 +397,8 @@ def data_iter_random(corpus_indices, batch_size, num_steps, device=None):
     # 返回从pos开始的长为num_steps的序列
     def _data(pos):
         return corpus_indices[pos: pos + num_steps]
-    if device is None:
-        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+#    if device is None:
+#        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     
     for i in range(epoch_size):
         # 每次读取batch_size个随机样本
@@ -409,8 +409,8 @@ def data_iter_random(corpus_indices, batch_size, num_steps, device=None):
         yield torch.tensor(X, dtype=torch.float32, device=device), torch.tensor(Y, dtype=torch.float32, device=device)
 
 def data_iter_consecutive(corpus_indices, batch_size, num_steps, device=None):
-    if device is None:
-        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+#    if device is None:
+#        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     corpus_indices = torch.tensor(corpus_indices, dtype=torch.float32, device=device)
     data_len = len(corpus_indices)
     batch_len = data_len // batch_size
