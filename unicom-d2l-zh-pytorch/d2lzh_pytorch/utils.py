@@ -376,7 +376,7 @@ def resnet18(output=10, in_channels=3):
 # ############################## 6.3 ##################################3
 def load_data_jay_lyrics():
     """加载周杰伦歌词数据集"""
-    with zipfile.ZipFile('../../data/jaychou_lyrics.txt.zip') as zin:
+    with zipfile.ZipFile('../data/jaychou_lyrics.txt.zip') as zin:
         with zin.open('jaychou_lyrics.txt') as f:
             corpus_chars = f.read().decode('utf-8')
     corpus_chars = corpus_chars.replace('\n', ' ').replace('\r', ' ')
