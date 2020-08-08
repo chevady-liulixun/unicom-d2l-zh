@@ -1,3 +1,4 @@
+![](https://github.com/chevady-liulixun/unicom-d2l-zh/blob/master/images/unicom-d2l-zh.png)
 # 《深度学习实战》
 这里是为了*中国联通《深度学习实战》培训课程*内容分享，我们期许**学习新知识，结识新朋友！** 
 ## 课程思路与鸣谢
